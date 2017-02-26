@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+
+<h3>Employees</h3>
+<button id="getEmployees">Get Employees</button>
+<pre id="output">
+
+</pre>
+<script src="Scripts/jquery-3.1.1.js"></script>
+<script>
+    $(function() {
+        var getEmployees = function() {
+
+            $.get(url).always(showResponse);
+            return false;
+        }
+
+        var showResponse = function(object) {
+            $("#output").text(JSON.stringify(object, null, 4));
+        }
+
+        var url = "http://localhost:10273/api/employees/";
+
+        $("#getEmployees").click(getEmployees());
+    });
+</script>
+</body>
+</html>
