@@ -1,16 +1,18 @@
 ﻿@model List<EmployeesSite.Models.EmployeeEntry>
 
-@{
-    ViewBag.Title = "View";
-}
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
 <h1>Employees</h1>
 
 <table>
     <tr>
         <th>Name</th>
         <th>Age</th>
-        <th>View</th>
     </tr>
     @foreach (var employee in Model)
     {
@@ -19,4 +21,7 @@
             <th>@employee.Age</th>
         </tr>
     }
+    t
 </table>
+</body>
+</html>

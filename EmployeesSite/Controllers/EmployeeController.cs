@@ -20,30 +20,27 @@ namespace EmployeesSite.Controllers
         }
         // GET: Employee
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            List < EmployeeEntry > model = null;
-            Task.Run(() =>
-            {
-                _httpClient = new HttpClient();
-
-                var url = "http://localhost:10273/";
-                _httpClient.BaseAddress = new Uri(url);
-                _httpClient.DefaultRequestHeaders.Accept.Clear();
-                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                model = GetEmployeesAsync().Result;
-            }).Wait();
-
-            return View(model);
+            var model = await GetEmployeesAsync();
+            var list = model.ToList();
+            return View(list);
         }
 
         [NonAction]
         private async Task<List<EmployeeEntry>> GetEmployeesAsync()
         {
+            _httpClient = new HttpClient();
+
+            var url = "http://localhost:10273/";
+            _httpClient.BaseAddress = new Uri(url);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
             var path = "api/employees";
             List<EmployeeEntry> employees = null;
-            HttpResponseMessage response = await _httpClient.GetAsync(path);
+            var response = await _httpClient.GetAsync(path);
+
             if (response.IsSuccessStatusCode)
             {
                 employees = await response.Content.ReadAsAsync<List<EmployeeEntry>>();
